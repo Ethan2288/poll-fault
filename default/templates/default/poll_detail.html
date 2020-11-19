@@ -1,0 +1,14 @@
+{% extends "base.hyml" %}
+
+{% block content %}
+<h1>{{ poll.subject }}</h1>
+<p>{{ poll.description }}</p>
+<p>建立日期:{{ poll.date_created }}</p>
+
+<ul>
+    {% for option in option_list %}
+    <li> <a href="/poll{{ poll.id }}/">/{{ option.title}}/"></a>
+        - {{ option.count }}票</li>
+    {% ender %}
+</ul>
+{% endblock %}

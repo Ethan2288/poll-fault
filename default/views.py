@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Poll, ListView
-from django.views.generic import ListView, DetailView, RedirectView
+from .models import Poll, Option
+from django.views.generic import *
 # Create your views here.
 def poll_list(req):
     polls = models.Poll.objects.all()
@@ -8,10 +8,10 @@ def poll_list(req):
 
 
 class PollList(ListView):
-    model =Poll
+    model = Poll
 
 class PollDetail(DetailView):
-    model=Poll
+    model = Poll
 
     def get_contaxt_data(self, **kwargs):
         ctx = super().get_contaxt_data(**kwargs)
@@ -26,3 +26,17 @@ class PollVote(RedirectView):
         option.save()
         return '/poll/{}/'.format(option.poll_id)
         # return '/poll/'+str(option.poll_id)+'/'
+
+class PollCreate(CreateView):
+    model = Poll
+    fields = ['subject', 'description']
+    success_url = '/poll/'
+
+class PollEdit(UpdateView):
+    model = Poll
+    fields = '__all__'
+    success_url = '/poll/'
+
+class PollDelete(DeleteView):
+    model = Poll
+    success_url = '/poll/'
